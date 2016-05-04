@@ -10,7 +10,6 @@ include "../includes/db_connect.php";
 
 $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
-
 try {
 
     $query = "SELECT id, name, description, price FROM products WHERE id = ? LIMIT 0,1";
@@ -23,10 +22,10 @@ try {
     $price = $row['price'];
 }
 
-// show error
 catch(PDOException $exception){
     die('ERROR: ' . $exception->getMessage());
 }
+
 ?>
 
 <form action='update.php?id=<?php echo htmlspecialchars($id); ?>' method='post' border='0'>
@@ -57,12 +56,9 @@ catch(PDOException $exception){
 
 $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
 
-
-
 if($_POST){
 
     try{
-
 
         $query = "UPDATE products
                     SET name=:name, description=:description, price=:price
@@ -70,18 +66,13 @@ if($_POST){
 
 
         $stmt = $con->prepare($query);
-
-
         $name=htmlspecialchars(strip_tags($_POST['name']));
         $description=htmlspecialchars(strip_tags($_POST['description']));
         $price=htmlspecialchars(strip_tags($_POST['price']));
-
-
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':price', $price);
         $stmt->bindParam(':id', $id);
-
 
         if($stmt->execute()){
             echo "Record was updated.";
@@ -90,7 +81,6 @@ if($_POST){
         }
 
     }
-
 
     catch(PDOException $exception){
         die('ERROR: ' . $exception->getMessage());

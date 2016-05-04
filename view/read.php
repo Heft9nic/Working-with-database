@@ -2,6 +2,26 @@
 
 include "../includes/db_connect.php";
 
+?>
+
+    <script type='text/javascript'>
+        function delete_user( id ){
+
+            var answer = confirm('Are you sure?');
+            if (answer){
+                window.location = 'delete.php?id=' + id;
+            }
+        }
+    </script>
+
+<?php
+
+$action = isset($_GET['action']) ? $_GET['action'] : "";
+
+if($action=='deleted'){
+    echo "<div>Record was deleted.</div>";
+}
+
 $query = "SELECT id, name, description, price FROM products";
 $stmt = $con->prepare($query);
 $stmt->execute();
